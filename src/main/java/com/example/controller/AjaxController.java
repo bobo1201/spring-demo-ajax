@@ -23,11 +23,24 @@ import com.example.domain.DataSet;
 @Controller
 public class AjaxController {
 	private static Logger logger = LoggerFactory.getLogger(AjaxController.class);
-	
+
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home(){
 		return "index";
 	}
+
+	@RequestMapping(value = "/test1", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<String> test1(@ModelAttribute("a") String a, @RequestParam("b") String b){
+		logger.info("Test List.....");
+		logger.info("a : " + a);
+		logger.info("b : " + b);
+		List<String> testList = new ArrayList<>();
+		testList.add(a);
+		testList.add(b);
+
+		return testList;
+	}
+
 
 	// Test Case - 1
 	@ResponseBody
@@ -39,6 +52,9 @@ public class AjaxController {
 		List<String> response = new ArrayList<String>();
 		response.add(username);
 		response.add(password);
+//		response.add(username);
+//		response.add(username);
+
 		return response;
 	}
 
