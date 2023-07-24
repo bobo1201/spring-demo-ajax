@@ -29,6 +29,7 @@ public class AjaxController {
 		return "index";
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/test1", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<String> test1(@ModelAttribute("a") String a, @RequestParam("b") String b){
 		logger.info("Test List.....");
