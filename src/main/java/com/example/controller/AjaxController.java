@@ -1,24 +1,18 @@
 package com.example.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.example.domain.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.domain.DataSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AjaxController {
@@ -31,7 +25,7 @@ public class AjaxController {
 
 	@ResponseBody
 	@RequestMapping(value = "/test1", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<String> test1(@ModelAttribute("a") String a, @RequestParam("b") String b){
+	public List<Map<String, String>> test1(@ModelAttribute("a") String a, @RequestParam("b") String b){
 		logger.info("Test List.....");
 		logger.info("a : " + a);
 		logger.info("b : " + b);
@@ -39,7 +33,21 @@ public class AjaxController {
 		testList.add(a);
 		testList.add(b);
 
-		return testList;
+
+
+		List<Map<String, String>> listMap= new ArrayList<>();
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("a", a);
+		map.put("b", b);
+
+		listMap.add(map);
+
+		logger.info("listMap : " + listMap);
+
+
+		return listMap;
 	}
 
 
@@ -69,7 +77,8 @@ public class AjaxController {
 		response.add(dataSet.getPassword());
 		return response;
 	}
-	
+
+
 	// Test Case - 3
 	@RequestMapping(value="/list_nobody", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public List<String> list_noresponsebody(@ModelAttribute("username") String username, @RequestParam("password") String password){
